@@ -8,19 +8,6 @@ use Illuminate\Http\JsonResponse;
 
 class SensorController extends Controller
 {
-    /**
-     * Store sensor data from ESP32.
-     * POST /api/sensor
-     * 
-     * Expected JSON from ESP32:
-     * {
-     *   "device_id": "esp32-01",
-     *   "suhu": 28.5,
-     *   "kelembaban": 65.2,
-     *   "kualitas_udara": 42,
-     *   "penggunaan_energi": 12.5
-     * }
-     */
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
