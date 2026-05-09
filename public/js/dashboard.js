@@ -415,7 +415,8 @@ function updateEspDeviceBar(data) {
         if (diffSec < 10) timeAgo = 'baru saja';
         else if (diffSec < 60) timeAgo = `${diffSec} detik lalu`;
         else if (diffSec < 3600) timeAgo = `${Math.floor(diffSec / 60)} menit lalu`;
-        else timeAgo = `${Math.floor(diffSec / 3600)} jam lalu`;
+        else if (diffSec < 86400) timeAgo = `${Math.floor(diffSec / 3600)} jam lalu`;
+        else timeAgo = `${Math.floor(diffSec / 86400)} hari lalu`;
         
         lastUpdateEl.innerHTML = `<i data-lucide="clock" style="width:11px;height:11px;display:inline;vertical-align:-1px;margin-right:3px;"></i>${isLive ? 'Update' : 'Terakhir online'} ${timeAgo}`;
         lucide.createIcons();

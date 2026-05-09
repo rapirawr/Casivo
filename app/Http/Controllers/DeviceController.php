@@ -56,7 +56,7 @@ class DeviceController extends Controller
             ];
             $espDevice = [
                 'device_id'      => $latestSensor->device_id,
-                'updated_at'     => $latestSensor->created_at->diffForHumans(),
+                'updated_at'     => $this->formatTimeAgo($latestSensor->created_at),
                 'source'         => $isConnected ? 'esp32' : 'disconnected',
                 'total_readings' => Sensor::where('device_id', $latestSensor->device_id)->count(),
                 'wifi_rssi'      => $latestSensor->wifi_rssi ?? 0,
@@ -86,6 +86,20 @@ class DeviceController extends Controller
         }
 
         return compact('sensorData', 'espDevice');
+    }
+
+    /**
+     * Helper to format time ago in Indonesian.
+     */
+    private function formatTimeAgo($timestamp)
+    {
+        $diffSec = now()->diffInSeconds($timestamp);
+        
+        if ($diffSec < 10) return 'baru saja';
+        if ($diffSec < 60) return $diffSec . ' detik lalu';
+        if ($diffSec < 3600) return floor($diffSec / 60) . ' menit lalu';
+        if ($diffSec < 86400) return floor($diffSec / 3600) . ' jam lalu';
+        return floor($diffSec / 86400) . ' hari lalu';
     }
 
     /**
